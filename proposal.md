@@ -6,6 +6,10 @@
 
 Open-Nodes: Weather 
 - this is the opensource, communty-maintained, data gathering and data visualing tool. 
+- For MVP: 
+    - build the data server to catch the posting data from the Pi. 
+    - build the pi sensor
+    - build the slick client side to show the data and let users configure their view (no OAuth for MVP)
 
 ## Problem statement
 
