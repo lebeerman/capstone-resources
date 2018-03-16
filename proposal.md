@@ -5,7 +5,7 @@
 ## Project Description
 
 Open-Nodes: Weather 
-- this is the opensource, communty-maintained, data gathering tool. 
+- this is the opensource, communty-maintained, data gathering and data visualing tool. 
 
 (Open-Nodes: Water)
 
