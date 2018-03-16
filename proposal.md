@@ -57,3 +57,6 @@ Build a couple Pi Sensors: Beyond data from a single point (the utility comes fr
   - Stretch Goals: social auth + stripe for people to buy their own pi data collector
   
  
+#### References
+
+[kombucha thermostat on chip](https://learn.adafruit.com/kombucha-thermostat-with-circuitpython-and-feather?view=all)
