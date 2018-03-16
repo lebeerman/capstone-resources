@@ -53,7 +53,7 @@ Build a couple Pi Sensors: Beyond data from a single point (the utility comes fr
 1. Users will visit the site and be met with a visual experience of the current weather topics pulled from media outlets.
 1. Users will be prompted to buy a collection device and maintain it, connect it to their own wifi and increase the resolution of the community weather (water) collection array.
 
-  - (Stretch goals: Wundergraound, NOAA, Planet OS?, )
+  - Stretch Goals: Wundergraound, NOAA, Planet OS? --> Addition data vis integrations or posting to public data orgs.
   - Stretch Goals: social auth + stripe for people to buy their own pi data collector
   
  
