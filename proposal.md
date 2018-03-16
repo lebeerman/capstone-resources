@@ -59,4 +59,8 @@ Build a couple Pi Sensors: Beyond data from a single point (the utility comes fr
  
 #### References
 
+[Pi Component Listings](https://tutorials-raspberrypi.com/raspberry-pi-sensors-overview-50-important-components/)
 [kombucha thermostat on chip](https://learn.adafruit.com/kombucha-thermostat-with-circuitpython-and-feather?view=all)
+[Featherwing Data Logger Chip](https://learn.adafruit.com/adafruit-adalogger-featherwing?view=all)
+[Weather Station Info](https://www.raspberrypi.org/education/weather-station/)
+[Weather Pi Data Center](https://www.raspberryweather.com/)
