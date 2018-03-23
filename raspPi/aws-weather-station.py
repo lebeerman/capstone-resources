@@ -14,16 +14,13 @@ from time import sleep
 from datetime import date, datetime
 # End
 from __future__ import print_function
-
 import datetime
 import os
 import sys
 import time
 from urllib import urlencode
-
 import urllib2
 from sense_hat import SenseHat
-
 from config import Config
 
 # ============================================================================
@@ -32,7 +29,7 @@ from config import Config
 
 # AWS IoT certificate based connection (change to match AWS Thing)
 myMQTTClient = AWSIoTMQTTClient("123afhlss456")
-myMQTTClient.configureEndpoint("arn:aws:iot:us-west-2:004572524081:thing/climastatus-1", 8883)
+myMQTTClient.configureEndpoint("a26w4jfogb7bcs.iot.us-west-2.amazonaws.com", 8883)
 myMQTTClient.configureCredentials("/home/pi/cert/CA.pem", "/home/pi/cert/xxxx-private.pem.key", "/home/pi/cert/xxxxx-certificate.pem.crt")
 myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
 myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
@@ -165,7 +162,7 @@ def main():
 #loop and publish sensor reading
 
         payload = '{ "timestamp": "' + now_str + '","temperature": ' + str(result.temperature) + ',"humidity": '+ str(result.humidity) + ' }'
-        print payload
+        print (payload)
         myMQTTClient.publish("thing01/data", payload, 0)
         sleep(4)
     else:

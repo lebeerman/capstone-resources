@@ -19,7 +19,6 @@ import os
 import sys
 import time
 from urllib import urlencode
-
 import urllib2
 from sense_hat import SenseHat
 
@@ -176,7 +175,7 @@ def main():
     # infinite loop to continuously check weather values
 #loop and publish sensor reading
 
-        payload = '{ "timestamp": "' + now_str + '","temperature": ' + str(result.temperature) + ',"humidity": '+ str(result.humidity) + ' }'
+        payload = '{ "timestamp": "' + now_str + '","temperature": "' + str(result.temperature) + ',"humidity": "'+ str(result.humidity) + '" }'
         print (payload)
         myMQTTClient.publish("thing01/data", payload, 0)
         sleep(4)
