@@ -6,30 +6,23 @@
   the Astro Pi Sense HAT then uploads the data to a Weather Underground weather station.
   Opens Source refs from: John Wargo, Calvin Boey (https://github.com/szazo/DHT11_Python)
 '''
-# AWS BOILERPLATE
-import RPi.GPIO as GPIO
-import dht11
-from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-from time import sleep
-from datetime import date, datetime
-# End
-
 import datetime
 import os
 import sys
 import time
-from urllib import urlencode
 import urllib2
+from urllib import urlencode
 from sense_hat import SenseHat
-
 from config import Config
+from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
+
 
 # ============================================================================
 # AWS Constants
 # ============================================================================
 
 # AWS IoT certificate based connection (change to match AWS Thing)
-myMQTTClient = AWSIoTMQTTClient("123456abcdefg")
+myMQTTClient = AWSIoTMQTTClient("123456abcdefg") # this can be any string? - only exists for MQTT connections
 myMQTTClient.configureEndpoint("a26w4jfogb7bcs.iot.us-west-2.amazonaws.com", 8883)
 myMQTTClient.configureCredentials("/home/pi/cert/rootCA.pem.crt", "/home/pi/cert/12d0061795-private.pem.key", "/home/pi/cert/12d0061795-certificate.pem.crt")
 myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
@@ -63,10 +56,10 @@ SLASH_N = "\n"
 b = [0, 0, 255]  # blue
 r = [255, 0, 0]  # red
 e = [0, 0, 0]  # empty
-X = [255, 0, 0]  # Red
-O = [255, 255, 255]  # White
+X = [255, 0, 0]  # red
+O = [255, 255, 255]  # white
 
-# create images for up and down arrows
+# create images for 8x8 led grid
 arrow_up = [
     e, e, e, r, r, e, e, e,
     e, e, r, r, r, r, e, e,
@@ -106,6 +99,16 @@ success = [
     O, O, O, O, O, O, O, O,
     O, O, O, X, X, O, O, O,
     O, O, O, X, X, O, O, O
+]
+fail = [
+    O, O, O, X, X, O, O, O,
+    O, O, X, O, O, X, O, O,
+    O, O, O, O, O, X, O, O,
+    O, O, O, O, X, O, O, O,
+    O, O, O, X, O, O, O, O,
+    O, O, O, X, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    O, O, O, X, O, O, O, O
 ]
 
 
@@ -173,29 +176,21 @@ def main():
         last_minute = 59
 
     # infinite loop to continuously check weather values
-#loop and publish sensor reading
-
-        payload = '{ "timestamp": "' + now_str + '","temperature": "' + str(result.temperature) + ',"humidity": "'+ str(result.humidity) + '" }'
-        print (payload)
-        myMQTTClient.publish("thing01/data", payload, 0)
-        sleep(4)
-    else:
-        print (".")
-        sleep(1)
-
+    # loop and publish sensor reading
     while 1:
-        # Tutorial Boilerplate for DHT
+        # Tutorial Boilerplate for DHT -saving for stretch goal.
         # tutorial condition: result.is_valid()
-        now = datetime.utcnow()
-        now_str = now.strftime('%Y-%m-%dT%H:%M:%SZ')
         # BCM GPIO04 instance = dht11.DHT11(pin = 4)
         # result = instance.read()
-        # are we at the top of the minute or at a 5 second interval?
 
+        # time value for AWS payload
+        now = datetime.utcnow()
+        now_str = now.strftime('%Y-%m-%dT%H:%M:%SZ')
 
+        # Are we at the top of the minute or at a 5 second interval?
         # The temp measurement smoothing algorithm's accuracy is based
         # on frequent measurements, so we'll take measurements every 5 seconds
-        # but only upload on measurement_interval
+        # but only upload on measurement_interval.
         current_second = datetime.datetime.now().second
 
         if (current_second == 0) or ((current_second % 5) == 0):
@@ -250,9 +245,9 @@ def main():
                     last_temp = temp_f
 
                     # ========================================================
-                    # Upload the weather data to AWS &&  Weather Underground
+                    # Upload to AWS &&  Weather Underground
                     # ========================================================
-                    # is weather upload enabled (True)?
+                    # is UPLOAD enabled (True)?
                     if UPLOAD:
                         # From http://wiki.wunderground.com/index.php/PWS_-_Upload_Protocol
                         print("Uploading data to Weather Underground")
@@ -283,9 +278,11 @@ def main():
                             print("Exception:", sys.exc_info()[0], SLASH_N)
                     else:
                         print("Skipping Weather Underground upload")
+                        print("AWS Upload Failed.")
+
 
         # wait a second then check again
         # You can always increase the sleep value below to check less often
-        time.sleep(1)  # this should never happen since the above is an infinite loop
+        time.sleep(5)  # this should never happen since the above is an infinite loop
 
     print("Leaving main()")
