@@ -1,11 +1,11 @@
  #!/usr/bin/python
-'''
-  AWS Pi Temperature Station
-  By Dan Beerman
-  This is a Raspberry Pi project that measures weather values (temperature, humidity and pressure) using
-  the Astro Pi Sense HAT then uploads the data to a Weather Underground weather station.
-  Opens Source refs from: John Wargo, Calvin Boey (https://github.com/szazo/DHT11_Python)
-'''
+
+#  AWS Pi Temperature Station
+#  By Dan Beerman
+#  This is a Raspberry Pi project that measures weather values (temperature, humidity and pressure) using
+#  the Astro Pi Sense HAT then uploads the data to a Weather Underground weather station.
+#  Opens Source refs from: John Wargo, Calvin Boey (https://github.com/szazo/DHT11_Python)
+
 import datetime
 import os
 import sys
@@ -15,7 +15,6 @@ from urllib import urlencode
 from sense_hat import SenseHat
 from config import Config
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-
 
 # ============================================================================
 # AWS Constants
